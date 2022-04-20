@@ -16,6 +16,33 @@ conda-forge | PyPI
 [![conda-forge version](https://anaconda.org/conda-forge/pypardiso/badges/version.svg)](https://anaconda.org/conda-forge/pypardiso) | [![PyPI version](https://badge.fury.io/py/pypardiso.svg)](https://pypi.org/project/pypardiso/)
 `conda install -c conda-forge pypardiso` | `pip install pypardiso`
 
+## Test complex numbers
+```python
+import pypardiso
+import numpy as np
+import scipy.sparse as sp
+from scipy.sparse.linalg import spsolve
+
+A = sp.rand(10, 10, density=0.5, format='csr')
+b = np.random.rand(10)
+#x = pypardiso.spsolve(A, b)
+x = pypardiso.spsolve(A, b, solver=pypardiso.PyPardisoSolver(mtype=pypardiso.Matrix_type.RNS))
+print(x)
+A = A.astype(np.cdouble)
+b=b.astype(np.cdouble)
+x = pypardiso.spsolve(A, b, solver=pypardiso.PyPardisoSolver(mtype=pypardiso.Matrix_type.CNS))
+print(x)
+
+
+A = sp.rand(10, 10, density=0.5, format='csr',dtype=np.cdouble)
+x = pypardiso.spsolve(A, b, solver=pypardiso.PyPardisoSolver(mtype=pypardiso.Matrix_type.CNS))
+print(x)
+
+x1 = spsolve(A, b)
+print(x1)
+
+print(np.max(np.abs(x-x1)))
+```
 
 ## Basic usage
 
