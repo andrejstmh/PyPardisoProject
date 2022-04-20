@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from .pardiso_wrapper import PyPardisoSolver
+from .pardiso_wrapper import PyPardisoSolver, Matrix_type
 from .scipy_aliases import spsolve, factorized
 from .scipy_aliases import pypardiso_solver as ps
 
